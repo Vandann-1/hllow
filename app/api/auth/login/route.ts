@@ -36,11 +36,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Incorrect password" }, { status: 401 });
     }
 
-    // Update lastLogin
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { lastLogin: new Date() },
-    });
+    // Update lastLogin safely
+    try {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { lastLogin: new Date() },
+      });
+    } catch (updateErr) {
+      console.warn("Could not update lastLogin timestamp:", updateErr);
+    }
 
     const token = await signToken({
       userId: user.id,
