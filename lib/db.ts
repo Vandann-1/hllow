@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import path from "path";
 import fs from "fs";
+import os from "os";
 
 function getDatabaseUrl(): string {
   if (process.env.DATABASE_URL) {
@@ -15,9 +16,10 @@ function getDatabaseUrl(): string {
   );
 
   if (isServerless) {
-    const tmpDbPath = path.join("/tmp", "dev.db");
+    const tmpDir = os.tmpdir();
+    const tmpDbPath = path.join(tmpDir, "dev.db");
 
-    // Copy bundled seed database to /tmp if it doesn't exist yet
+    // Copy bundled seed database to tmp if it doesn't exist yet
     if (!fs.existsSync(tmpDbPath)) {
       const candidates = [
         path.join(process.cwd(), "prisma", "dev.db"),
@@ -36,7 +38,7 @@ function getDatabaseUrl(): string {
             } catch {}
             break;
           } catch (e) {
-            console.error("Failed to copy db candidate to /tmp:", candidate, e);
+            console.error("Failed to copy db candidate to tmp:", candidate, e);
           }
         }
       }
