@@ -1,9 +1,0 @@
-{
-  "/_not-found/page": "app/_not-found/page.js",
-  "/login/page": "app/login/page.js",
-  "/api/wishes/route": "app/api/wishes/route.js",
-  "/api/auth/me/route": "app/api/auth/me/route.js",
-  "/api/auth/login/route": "app/api/auth/login/route.js",
-  "/api/notifications/route": "app/api/notifications/route.js",
-  "/onboarding/page": "app/onboarding/page.js"
-}
